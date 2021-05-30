@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: "org.apache.derby.jdbc.ClientDriver"
+    url: "jdbc:derby://localhost:1527/QuizDb;create=false"
+    username: web
+    password: PmXdxY9bkrr5YqVP
+
+server:
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: YhK5pBT5z64uMnua
+    key-store-type: pkcs12
+    key-alias: tomcat
+    key-password: YhK5pBT5z64uMnua
+  port: 8443
