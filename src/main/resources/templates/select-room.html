@@ -1,19 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head></head>
-<body>
-<h1>Type the room number</h1>
-<form th:action="@{/setRoom}" method='POST'>
-    <p th:if="${noRoom}" class="error">No room</p>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='room' value=''></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{main-layout :: layout(script = ~{::script}, body = ~{::body})}">
+<head>
+    <script>
+
+      function onLoad() {
+         $(".container").center();
+      }
+
+      window.addEventListener("resize", onLoad);
+
+   </script>
+</head>
+<body onload="onLoad()">
+
+    <form th:action="@{/setRoom}" method='POST'>
+        <div class="container" style="max-width: 400px">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type the room number</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div th:if="${noRoom}" class="alert alert-danger">
+                        <strong>Room not found</strong>
+                    </div>
+
+                    <form th:action="@{/performLogin}" method='POST'>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="roomIdentifier" name="roomIdentifier" placeholder="Room number">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+
 </body>
 </html>

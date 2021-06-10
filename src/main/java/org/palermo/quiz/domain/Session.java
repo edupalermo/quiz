@@ -7,9 +7,10 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
-public class Room {
+public class Session {
 
-    private final String identifier;
+    private final Room room;
+    private final Account account;
+    private final int points;
     private final LocalDateTime creation;
-    private final LocalDateTime lastActivity;
 }

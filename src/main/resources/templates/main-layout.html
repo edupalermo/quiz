@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(body)">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <script src="/webjars/jquery/jquery.min.js"></script>
+
+   <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+   <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+   <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+   <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+   <script src="/js/library.js"></script>
+   <script src="/js/room.js"></script>
+   <script src="/js/user.js"></script>
+
+   <th:block th:if="${style}">
+      <style th:replace="${style}"></style>
+   </th:block>
+
+
+   <th:block th:if="${script}">
+      <script th:replace="${script}"></script>
+   </th:block>
+
+</head>
+<body th:replace="${body}">
+   Main Layout
+</body>
+</html>

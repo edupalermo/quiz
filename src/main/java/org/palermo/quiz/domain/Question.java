@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
-public class Room {
+public class Question {
 
+    private final String fullPath;
     private final String identifier;
     private final LocalDateTime creation;
-    private final LocalDateTime lastActivity;
 }

@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Quiz</title>
+
+    <script src="/webjars/jquery/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/room.js"></script>
+    <script src="/js/user.js"></script>
+
+    <style>
+        .question {
+            padding:20px;
+            position: absolute;
+            background-color: #EEEEEE;
+            left : 0px;
+            right : 200px;
+            height : 100%;
+            font-weight: bold;
+            overflow: auto;
+            border: 20px solid #FFFFFF;
+        }
+
+        .rank {
+            position: absolute;
+            width: 200px;
+            height : 100%;
+            right: 0px;
+            background-color: #EEEEEE;
+        }
+
+        .option {
+            padding: 10px;
+            border: 2px solid #000000;
+            display: inline-block;
+            vertical-align: top;
+            justify-content: center;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .option-panel {
+            /* border: 2px solid #ddd; */
+            width: 100%;
+            text-align: center;
+        }
+  </style>
+
+    <script>
+
+        function onLoad() {
+            changeQuestionSize();
+        }
+
+        function changeQuestionSize() {
+            var originalSize = getFontSize($(".question"));
+            var count = 1;
+
+            // while ($("body").height() < $(window).height()) {
+
+            while (!hasScrollBar($(".question"))) {
+                // $(".rank").css("height", "100%");
+
+                $(".question").css("font-size", (originalSize + count) + "px")
+                count++;
+
+                if (count > 5000) {
+                    break;
+                }
+            }
+
+            console.log("Part One!");
+
+
+            while (hasScrollBar($(".question"))) {
+                count--;
+
+                console.log("step");
+
+                $(".question").css("font-size", (originalSize + count) + "px")
+
+                $('.option').css("width", "auto");
+                $('.option').css("height", "auto");
+
+                console.log("Width: " + getLargestOption());
+                console.log("Height: " + getHighestOption());
+                $('.option').width(parseInt(getLargestOption()));
+                $('.option').height(parseInt(getHighestOption()));
+
+                if (count < 0) {
+                    break;
+                }
+            }
+
+            console.log("Finished!");
+
+        }
+
+
+        function hasScrollBar(element) {
+            return element.get(0).scrollHeight > element.innerHeight();
+        }
+
+        function getFontSize(element) {
+            var myRegexp = /^(\d+)px$/g;
+            var fontSize = element.css("font-size");
+
+            var myRegexp = /^(\d+)px$/g;
+            var matcher = myRegexp.exec(fontSize);
+            if (matcher) {
+                return parseInt(matcher[1]);
+            }
+            // throw error!
+        }
+
+        function getLargestOption() {
+            var largest = 0;
+            var options = $(".option");
+            $('.option').each(function() {
+                largest = Math.max(largest, $(this).width());
+            });
+            return largest;
+        }
+
+        function getHighestOption() {
+            var highest = 0;
+            var options = $(".option");
+            $('.option').each(function() {
+                highest = Math.max(highest, $(this).height());
+            });
+            return highest;
+        }
+
+        window.addEventListener("resize", changeQuestionSize);
+   </script>
+</head>
+<body onload="onLoad()">
+
+
+    <div class="question">
+        <p>Question: Who is the worst father of the world?</p>
+        <p>&nbsp;</p>
+
+        <div class="option-panel">
+            <span class="option" style="background-color: red">Eduardo</span>
+            <span class="option" style="background-color: blue">Chatonildo</span>
+            <span class="option" style="background-color: green">Toninho</span>
+            <span class="option" style="background-color: yellow">bla bla</span>
+            <span class="option" style="background-color: brown">Toninho</span>
+        </div>
+    </div>
+
+
+    <div id="rank" class="rank">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Rank</h3>
+            </div>
+            <div class="panel-body">
+                <table id="user-table" class="table table-striped">
+                    <tr>
+                        <td>Beatriz <span class="badge" style="float: right">1000</span></td>
+                    </tr>
+                    <tr>
+                        <td>Eduardo <span class="badge" style="float: right">500</span></td>
+                    </tr>
+                    <tr>
+                        <td>Renata  <span class="badge" style="float: right">100</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-right">
+                Room 12345678
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

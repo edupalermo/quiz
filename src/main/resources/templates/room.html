@@ -1,7 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head></head>
-<body>
-<h1 th:text="'Room ID ' + ${roomId}"></h1>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{main-layout :: layout(style = ~{::style}, script = ~{::script}, body = ~{::body})}">
+<head>
+    <script>
+
+    </script>
+
+    <style>
+        .question {
+            padding:20px;
+            position: absolute;
+            background-color: #EEEEEE;
+            left : 0px;
+            right : 200px;
+            height : 100%;
+            font-weight: bold;
+            overflow: auto;
+            border: 20px solid #FFFFFF;
+        }
+
+        .rank {
+            position: absolute;
+            width: 200px;
+            height : 100%;
+            right: 0px;
+            background-color: #EEEEEE;
+        }
+
+        .option {
+            padding: 10px;
+            border: 2px solid #000000;
+            display: inline-block;
+            vertical-align: top;
+            justify-content: center;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .option-panel {
+            /* border: 2px solid #ddd; */
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body onload="connectRoom()">
+
+
+<div id="temporary-panel" class="container">
+    <h1 th:text="'Room ID ' + ${roomIdentifier}"></h1>
+</div>
+
+
+
+
 </body>
 </html>

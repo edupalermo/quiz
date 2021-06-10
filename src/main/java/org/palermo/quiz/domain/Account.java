@@ -7,9 +7,8 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
-public class Room {
+public class Account {
 
-    private final String identifier;
+    private final String email;
     private final LocalDateTime creation;
-    private final LocalDateTime lastActivity;
 }

@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Quiz</title>
+
+    <script src="/webjars/jquery/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/room.js"></script>
+    <script src="/js/user.js"></script>
+
+    <style>
+        .question {
+            background-color: #b3ffec;
+            overflow: auto;
+        }
+
+        .rank {
+            background-color: #EEEEEE;
+            overflow: auto;
+            font-size: 0.3em;
+        }
+
+        .option {
+            padding: 10px;
+            border: 2px solid #000000;
+            display: inline-block;
+            vertical-align: top;
+            justify-content: center;
+            margin: 10px;
+            border-radius: 25px;
+        }
+
+        .option-panel {
+            /* border: 2px solid #ddd; */
+            width: 100%;
+            text-align: center;
+        }
+
+        #main-table {
+            width: 100%;
+            background-color: red;
+        }
+
+  </style>
+
+    <script>
+
+        var originalSize ;
+
+
+        function onLoad() {
+            originalSize = {
+                bodyFontSize: getFontSize($("body"))
+            };
+
+            changeQuestionSize();
+        }
+
+        function changeQuestionSize() {
+
+            // Necessary to set the height of the DIV
+            $("#main-table").height($(window).height());
+            $("#question").height($(window).height());
+            $("#rank").height($(window).height());
+
+            var count = 0;
+
+            while (!hasScrollBar($("#question"))) {
+                count++;
+
+                resizeContent((originalSize.bodyFontSize + count) / originalSize.bodyFontSize);
+
+                if (count > 200) {
+                    console.log("Probably not working...");
+                    break;
+                }
+            }
+
+
+            console.log("Part One, count: " + count);
+            console.log("Has scroll: " + hasScrollBar($("#question")));
+
+            //return;
+
+            while (hasScrollBar($("#question"))) {
+                count--;
+
+                resizeContent((originalSize.bodyFontSize + count) / originalSize.bodyFontSize);
+
+                if (originalSize.bodyFontSize + count <= 1) {
+                    break;
+                }
+            }
+
+            console.log("Finished!");
+
+        }
+
+        function resizeContent(percentage) {
+            console.log ("Percentage: " + percentage);
+            $("body").css("font-size", Math.round(originalSize.bodyFontSize * percentage) + "px");
+
+            $('.option').css("width", "auto");
+            $('.option').css("height", "auto");
+            $('.option').width(parseInt(getLargestOption()));
+            $('.option').height(parseInt(getHighestOption()));
+        }
+
+
+        function hasScrollBar(element) {
+            console.log("Has: " + element.get(0).scrollHeight > element.innerHeight());
+            return element.get(0).scrollHeight > element.innerHeight();
+        }
+
+        function getFontSize(element) {
+            var myRegexp = /^(\d+)px$/g;
+            var fontSize = element.css("font-size");
+
+            var myRegexp = /^(\d+)px$/g;
+            var matcher = myRegexp.exec(fontSize);
+            if (matcher) {
+                return parseInt(matcher[1]);
+            }
+            // throw error!
+        }
+
+        function getLargestOption() {
+            var largest = 0;
+            var options = $(".option");
+            $('.option').each(function() {
+                largest = Math.max(largest, $(this).width());
+            });
+            return largest;
+        }
+
+        function getHighestOption() {
+            var highest = 0;
+            var options = $(".option");
+            $('.option').each(function() {
+                highest = Math.max(highest, $(this).height());
+            });
+            return highest;
+        }
+
+        window.addEventListener("resize", changeQuestionSize);
+   </script>
+</head>
+<body onload="onLoad()">
+
+    <table id="main-table">
+        <tr>
+            <td widht="99%">
+                <div id="question" class="question">
+                    <div style="padding: 50px;">
+                        <p>Question: Who is the worst father of the world?</p>
+                        <p>&nbsp;</p>
+
+                        <div class="option-panel">
+                            <span class="option" style="background-color: red">Eduardo</span>
+                            <span class="option" style="background-color: blue">Chatonildo</span>
+                            <span class="option" style="background-color: green">Toninho</span>
+                            <span class="option" style="background-color: yellow">bla bla</span>
+                            <span class="option" style="background-color: brown">Toninho</span>
+                        </div>
+                    <div>
+                </div>
+            </td>
+            <td width="1%">
+                <div id="rank" class="rank">
+                    <div style="padding: 50px;">
+                        <div><b>Rank</b></div>
+                        <table>
+                            <tr>
+                                <td>Renata</td><td align="right">100</td>
+                            </tr>
+                            <tr>
+                                <td>Beatriz</td><td align="right">50</td>
+                            </tr>
+                            <tr>
+                                <td>Eduardo</td><td align="right">1</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+
+
+
+
+</body>
+</html>
